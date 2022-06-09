@@ -14,6 +14,11 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
+        env:
+          NOUKATU_TEST_URL: ${{ secrets.NOUKATU_TEST_URL }}
+          NOUKATU_TEST_BASIC_USER: ${{ secrets.NOUKATU_TEST_BASIC_USER }}
+          NOUKATU_TEST_BASIC_PASS: ${{ secrets.NOUKATU_TEST_BASIC_PASS }}
+          NOUKATU_TEST_PASS: ${{ secrets.NOUKATU_TEST_PASS }}
         run: npm run e2e:all
       - uses: actions/upload-artifact@v2
         if: always()
