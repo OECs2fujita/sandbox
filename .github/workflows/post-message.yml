@@ -19,7 +19,7 @@ jobs:
           # 以下のように #チャンネル名も動作はしますが
           # チャンネル名が変更されると動かなくなるので
           # 実運用では C1QAUTY0M のような ID を使ってください
-          channel-id: C03HTB5869H
+          channel-id: STOPNOTIF # C03HTB5869H
           payload: |
             {
               "text": ":github: ビルド結果: ${{ job.status }}\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
