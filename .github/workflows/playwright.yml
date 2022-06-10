@@ -3,7 +3,7 @@ on:
   # S3 へのデプロイが完了したらE2Eテストを実行する
   workflow_run:
     workflows:
-      - deploy-to-s3
+      - Build & Deploy to S3
     branches:
       - main
     types:
