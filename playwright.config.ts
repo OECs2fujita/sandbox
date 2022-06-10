@@ -11,7 +11,7 @@ import { devices } from "@playwright/test";
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
-  testDir: "./src/tests",
+  testDir: "./e2e-tests",
   /* Maximum time one test can run for. */
   timeout: 30 * 1000,
   expect: {
@@ -95,7 +95,7 @@ const config: PlaywrightTestConfig = {
   ],
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
-  outputDir: "test-results/",
+  outputDir: "playwright-report/",
 
   /* Run your local dev server before starting the tests */
   webServer: {

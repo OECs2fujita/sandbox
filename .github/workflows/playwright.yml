@@ -1,8 +1,13 @@
 name: Playwright Tests
-on: 
-  push:
-    paths:
-      - "src/**"
+on:
+  # S3 へのデプロイが完了したらE2Eテストを実行する
+  workflow_run:
+    workflows:
+      - deploy-to-s3
+    branches:
+      - main
+    types:
+      - completed
 jobs:
   test:
     timeout-minutes: 60
@@ -18,14 +23,41 @@ jobs:
         run: npx playwright install --with-deps
       - name: Run Playwright tests
         env:
-          NOUKATU_TEST_URL: ${{ secrets.NOUKATU_TEST_URL }}
-          NOUKATU_TEST_BASIC_USER: ${{ secrets.NOUKATU_TEST_BASIC_USER }}
-          NOUKATU_TEST_BASIC_PASS: ${{ secrets.NOUKATU_TEST_BASIC_PASS }}
-          NOUKATU_TEST_PASS: ${{ secrets.NOUKATU_TEST_PASS }}
+          STAGING_URL: ${{ secrets.STAGING_URL }}
         run: npm run e2e:all
-      - uses: actions/upload-artifact@v2
+      - name: Save Artifact
+        uses: actions/upload-artifact@v2
         if: always()
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+      - name: Send GitHub Action trigger data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1.16.0
+        with:
+          channel-id: C03HTB5869H # 通知を送りたいチャンネルのIDを指定する
+          payload: |
+            {
+              "text": ": E2Eテスト: ${{ job.status }}\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": " E2Eテスト: ${{ job.status }}\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                  }
+                },
+                {
+                  "type": "context",
+                  "elements": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "Author: <https://github.com/${{ github.event.sender.login }}|@${{ github.event.sender.login }}>"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

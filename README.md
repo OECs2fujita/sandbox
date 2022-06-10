@@ -1,8 +1,16 @@
 # sandbox
 
-## PlayWright x GitHub Actions
+## PlayWright
 
 [Playwrightの導入からGitHub Actions上でテストを実行するまで](https://zenn.dev/keita_hino/articles/d38956a2f1880e)
+
+## S3 デプロイ
+
+[GitHub ActionsでウェブサイトをAmazon S3にデプロイする](https://dev.classmethod.jp/articles/deploy-web-site-with-github-actions/)
+
+## Slack通知
+
+[Slack が提供する GitHub Action "slack-send" を使って GitHub から Slack に通知する](https://qiita.com/seratch/items/28d09eacada09134c96c)
 
 ## 備考
 
@@ -13,11 +21,3 @@
 - ローカルで動作させるときは.envファイルに情報を入力して利用する
 - GitHubで動作させるときはsecretsに入力して利用する
   - workflowファイルでsecretsをランナーの環境変数として設定し、それをテストファイルで参照する形になる
-
-## 課題
-
-- GitHub Actions → Slack通知
-  - [この記事](https://qiita.com/seratch/items/28d09eacada09134c96c)が参考になりそう
-  - 今回はRunner内でlocalhostを立てたが、実運用ではステージング環境にデプロイしてテストしたい
-    - GitHub Actionsでデプロイする方法
-    - URL指定をlocalhostからデプロイ先に変更するだけで問題なく動作するか？

@@ -1,8 +1,10 @@
 import { test, expect } from "@playwright/test";
 
-// 各テストを実行する前に http://localhost:3000 に遷移する
+// GitHub Secrets を playwright.yml 経由で読み込む
+var STAGING_URL = process.env["STAGING_URL"];
+
 test.beforeEach(async ({ page }) => {
-  await page.goto("http://localhost:3000");
+  await page.goto(STAGING_URL);
 });
 
 test("カウントアップボタンをクリックすると、カウントが増加すること", async ({
