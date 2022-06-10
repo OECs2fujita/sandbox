@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+require("dotenv").config();
 
 var dateObj = new Date();
 var testUser =

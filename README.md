@@ -8,6 +8,12 @@
 
 - Windows上だとWebkitのテストが上手く行かなかったが、GitHub Runner(Ubuntu)上ではエラーが出なかった
 
+## テストに必要な秘密情報について
+
+- ローカルで動作させるときは.envファイルに情報を入力して利用する
+- GitHubで動作させるときはsecretsに入力して利用する
+  - workflowファイルでsecretsをランナーの環境変数として設定し、それをテストファイルで参照する形になる
+
 ## 課題
 
 - GitHub Actions → Slack通知
