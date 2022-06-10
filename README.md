@@ -6,7 +6,7 @@
 
 ## S3 デプロイ
 
-[GitHub ActionsでウェブサイトをAmazon S3にデプロイする](https://dev.classmethod.jp/articles/deploy-web-site-with-github-actions/)
+[GitHub ActionsワークフローでAmazon S3のオブジェクトにアクセスする](https://dev.classmethod.jp/articles/s3-file-up-down-from-github-actions/)
 
 ## Slack通知
 

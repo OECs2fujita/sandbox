@@ -19,9 +19,7 @@ function App() {
             count up
           </button>
         </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
+        <p>CI/CD検証</p>
         <p>
           <a
             className="App-link"
