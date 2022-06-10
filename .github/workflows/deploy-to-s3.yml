@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v2
 
@@ -17,17 +18,24 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+
       - name: Deploy to S3
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: #S3のtest-github-deployバケットにデプロイ
-          aws s3 rm s3://test-github-deploy --recursive --region ap-northeast-1
-          aws s3 cp dist s3://test-github-deploy --recursive --region ap-northeast-1
+          S3_UPLOAD_BUCKET: ${{ secrets.S3_UPLOAD_BUCKET }}
+        run: #S3 バケットにデプロイ
+          aws s3 rm s3://$S3_UPLOAD_BUCKET --recursive
+          aws s3 cp dist s3://$S3_UPLOAD_BUCKET --recursive
 
       - name: Send GitHub Action trigger data to Slack workflow
         id: slack
         uses: slackapi/slack-github-action@v1.16.0
+        if: always()
         with:
           channel-id: C03HTB5869H # 通知を送りたいチャンネルのIDを指定する
           payload: |
