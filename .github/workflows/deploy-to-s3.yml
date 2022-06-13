@@ -42,7 +42,7 @@ jobs:
           channel-id: $CHANNEL_ID
           payload: |
             {
-              "text": ": Build & Deploy Success!!
+              "text": "Build & Deploy Success!!",
               "attachments": [
                 {
                   "color": "#00FF00",
@@ -69,7 +69,7 @@ jobs:
           channel-id: $CHANNEL_ID
           payload: |
             {
-              "text": ": Build & Deploy Failure...
+              "text": "Build & Deploy Failure...",
               "attachments": [
                 {
                   "color": "#FF0000",
