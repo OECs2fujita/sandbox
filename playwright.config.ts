@@ -95,13 +95,13 @@ const config: PlaywrightTestConfig = {
   ],
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
-  outputDir: "playwright-report/",
+  outputDir: "test-results/",
 
   /* Run your local dev server before starting the tests */
-  webServer: {
-    command: "npm run dev",
-    port: 3000,
-  },
+  // webServer: {
+  //   command: "npm run dev",
+  //   port: 3000,
+  // },
 };
 
 export default config;
