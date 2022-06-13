@@ -9,6 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    env:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      CHANNEL_ID: C03HTB5869H # 通知を送りたいチャンネルのIDを指定する
     steps:
       - uses: actions/checkout@v2
 
@@ -32,33 +35,56 @@ jobs:
           aws s3 rm s3://$S3_UPLOAD_BUCKET --recursive
           aws s3 cp dist s3://$S3_UPLOAD_BUCKET --recursive
 
-      - name: Send GitHub Action trigger data to Slack workflow
-        id: slack
+      - name: Slack Notification on Success
+        if: ${{ success() }}
         uses: slackapi/slack-github-action@v1.16.0
-        if: always()
         with:
-          channel-id: C03HTB5869H # 通知を送りたいチャンネルのIDを指定する
+          channel-id: $CHANNEL_ID
           payload: |
             {
-              "text": ": ビルド＆デプロイ: ${{ job.status }}\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
-              "blocks": [
+              "text": ": Build & Deploy Success!!
+              "attachments": [
                 {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": " ビルド＆デプロイ結果: ${{ job.status }}\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-                  }
-                },
-                {
-                  "type": "context",
-                  "elements": [
+                  "color": "#00FF00",
+                  "author_name": "${{ github.actor }}",
+                  "author_icon": "${{ github.event.sender.avatar_url }}",
+                  "fields": [
                     {
-                      "type": "mrkdwn",
-                      "text": "Author: <https://github.com/${{ github.event.sender.login }}|@${{ github.event.sender.login }}>"
+                      "title": "GitHub Actions URL",
+                      "value": "${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}"
+                    },
+                    {
+                      "title": "Compare URL",
+                      "value": "${{ github.event.compare }}"
                     }
                   ]
                 }
-              ]
+              ],
             }
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+      - name: Slack Notification on Failure
+        if: ${{ failure() }}
+        uses: slackapi/slack-github-action@v1.16.0
+        with:
+          channel-id: $CHANNEL_ID
+          payload: |
+            {
+              "text": ": Build & Deploy Failure...
+              "attachments": [
+                {
+                  "color": "#FF0000",
+                  "author_name": "${{ github.actor }}",
+                  "author_icon": "${{ github.event.sender.avatar_url }}",
+                  "fields": [
+                    {
+                      "title": "GitHub Actions URL",
+                      "value": "${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}"
+                    },
+                    {
+                      "title": "Compare URL",
+                      "value": "${{ github.event.compare }}"
+                    }
+                  ]
+                }
+              ],
+            }
