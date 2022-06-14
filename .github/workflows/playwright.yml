@@ -13,6 +13,7 @@ jobs:
   e2e_test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }} # デプロイが成功していないと実施しない
     env:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       CHANNEL_ID: C03HTB5869H # 通知を送りたいチャンネルのIDを指定する
