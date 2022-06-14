@@ -45,41 +45,60 @@ jobs:
 
       - name: Slack Notification on Success
         if: success()
-        id: slack_success
         uses: slackapi/slack-github-action@v1.16.0
         with:
-          channel-id: C03HTB5869H
+          channel-id: ${{ CHANNEL_ID }}
           payload: |
             {
               "text": "Build & Deploy Success!!",
-            }
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-
-      - name: Slack Notification on Failure
-        if: always() #${{ failure() }}
-        id: slack_failure
-        uses: slackapi/slack-github-action@v1.16.0
-        with:
-          channel-id: $CHANNEL_ID
-          payload: |
-            {
-              "text": "Build & Deploy Failure...",
               "attachments": [
                 {
-                  "color": "#00FF00",
-                  "author_name": "OECs2fujita",
-                  "author_icon": "https://github.com/OECs2fujita.png",
+                  "id": 1,
+                  "color": "00FF00",
+                  "author_name": "${{ github.actor }}",
+                  "author_icon": "${{ github.event.sender.avatar_url }}",
                   "fields": [
                     {
+                      "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
                       "title": "GitHub Actions URL",
-                      "value": "https://github.com/OECs2fujita/sandbox/actions/runs/2487204728",
+                      "short": false
                     },
                     {
+                      "value": "${{ github.event.compare }}",
                       "title": "Compare URL",
-                      "value": "test",
+                      "short": false
                     }
                   ]
                 }
-              ],
+              ]
+            }
+
+      - name: Slack Notification on Failure
+        if: failure()
+        uses: slackapi/slack-github-action@v1.16.0
+        with:
+          channel-id: ${{ CHANNEL_ID }}
+          payload: |
+            {
+              "text": "Build & Failure...",
+              "attachments": [
+                {
+                  "id": 1,
+                  "color": "00FF00",
+                  "author_name": "${{ github.actor }}",
+                  "author_icon": "${{ github.event.sender.avatar_url }}",
+                  "fields": [
+                    {
+                      "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
+                      "title": "GitHub Actions URL",
+                      "short": false
+                    },
+                    {
+                      "value": "${{ github.event.compare }}",
+                      "title": "Compare URL",
+                      "short": false
+                    }
+                  ]
+                }
+              ]
             }

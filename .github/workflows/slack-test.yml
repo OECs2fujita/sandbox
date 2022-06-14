@@ -9,10 +9,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Send GitHub Action trigger data to Slack workflow
-        uses: slackapi/slack-github-action@v1.19.0
+      - name: Slack Notification on Success
+        if: success()
+        uses: slackapi/slack-github-action@v1.16.0
         with:
-          channel-id: ${{ env.CHANNEL_ID }}
+          channel-id: ${{ CHANNEL_ID }}
           payload: |
             {
               "text": "Build & Deploy Success!!",
@@ -20,17 +21,16 @@ jobs:
                 {
                   "id": 1,
                   "color": "00FF00",
-                  "fallback": "[no preview available]",
-                  "author_name": "OECs2fujita",
-                  "author_icon": "https://github.com/OECs2fujita.png",
+                  "author_name": "${{ github.actor }}",
+                  "author_icon": "${{ github.event.sender.avatar_url }}",
                   "fields": [
                     {
-                      "value": "<https://github.com/OECs2fujita/sandbox/actions/runs/2487204728>",
+                      "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
                       "title": "GitHub Actions URL",
                       "short": false
                     },
                     {
-                      "value": "test",
+                      "value": "${{ github.event.compare }}",
                       "title": "Compare URL",
                       "short": false
                     }
@@ -39,31 +39,30 @@ jobs:
               ]
             }
 
-      - name: Send GitHub Action trigger data to Slack workflow2
-        if: always()
-        uses: slackapi/slack-github-action@v1.19.0
+      - name: Slack Notification on Failure
+        if: failure()
+        uses: slackapi/slack-github-action@v1.16.0
         with:
-          # 以下のように #チャンネル名も動作はしますが
-          # チャンネル名が変更されると動かなくなるので
-          # 実運用では C1QAUTY0M のような ID を使ってください
-          channel-id: ${{ env.CHANNEL_ID }}
+          channel-id: ${{ CHANNEL_ID }}
           payload: |
             {
-              "text": ":github: ビルド結果: ${{ job.status }}\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
-              "blocks": [
+              "text": "Build & Failure...",
+              "attachments": [
                 {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": ":github: ビルド結果: ${{ job.status }}\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-                  }
-                },
-                {
-                  "type": "context",
-                  "elements": [
+                  "id": 1,
+                  "color": "00FF00",
+                  "author_name": "${{ github.actor }}",
+                  "author_icon": "${{ github.event.sender.avatar_url }}",
+                  "fields": [
                     {
-                      "type": "mrkdwn",
-                      "text": "Author: <https://github.com/${{ github.event.sender.login }}|@${{ github.event.sender.login }}>"
+                      "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
+                      "title": "GitHub Actions URL",
+                      "short": false
+                    },
+                    {
+                      "value": "${{ github.event.compare }}",
+                      "title": "Compare URL",
+                      "short": false
                     }
                   ]
                 }
