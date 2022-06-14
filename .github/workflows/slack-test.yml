@@ -22,6 +22,7 @@ jobs:
               "text": "Build & Deploy Success!!",
               "attachments": [
                 {
+                  "id": 1,
                   "color": "00FF00",
                   "author_name": "${{ github.actor }}",
                   "author_icon": "${{ github.event.sender.avatar_url }}",
