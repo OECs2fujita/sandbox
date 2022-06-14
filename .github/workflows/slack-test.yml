@@ -3,23 +3,20 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      CHANNEL_ID: C03HTB5869H # 通知を送りたいチャンネルのIDを指定する
     steps:
-      # Check out theis repo
       - uses: actions/checkout@v2
 
-      # Start a Slack workflow using a webhook trigger
-      # https://github.com/slackapi/slack-github-action
       - name: Send GitHub Action trigger data to Slack workflow
         id: slack
-        uses: slackapi/slack-github-action@v1.16.0
+        uses: slackapi/slack-github-action@v1.19.0
         with:
-          # 以下のように #チャンネル名も動作はしますが
-          # チャンネル名が変更されると動かなくなるので
-          # 実運用では C1QAUTY0M のような ID を使ってください
-          channel-id: "#技術調査"
+          channel-id: $CHANNEL_ID
           payload: |
             {
-              "text": ":github: ビルド結果: ${{ job.status }}\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "text": "Build & Deploy Success!!",
               "attachments": [
                 {
                   "id": 1,
@@ -42,22 +39,51 @@ jobs:
                 }
               ],
               "blocks": [
-                  {
-                      "type": "rich_text",
-                      "block_id": "oUIu",
+                {
+                  "type": "rich_text",
+                  "block_id": "oUIu",
+                  "elements": [
+                    {
+                      "type": "rich_text_section",
                       "elements": [
-                          {
-                              "type": "rich_text_section",
-                              "elements": [
-                                  {
-                                      "type": "text",
-                                      "text": "Build & Deploy Success!!"
-                                  }
-                              ]
-                          }
+                        {
+                          "type": "text",
+                          "text": "Build & Deploy Success!!"
+                        }
                       ]
-                  }
+                    }
+                  ]
+                }
               ]
             }
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+      - name: Send GitHub Action trigger data to Slack workflow2
+        id: slack2
+        uses: slackapi/slack-github-action@v1.19.0
+        with:
+          # 以下のように #チャンネル名も動作はしますが
+          # チャンネル名が変更されると動かなくなるので
+          # 実運用では C1QAUTY0M のような ID を使ってください
+          channel-id: $CHANNEL_ID
+          payload: |
+            {
+              "text": ":github: ビルド結果: ${{ job.status }}\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":github: ビルド結果: ${{ job.status }}\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                  }
+                },
+                {
+                  "type": "context",
+                  "elements": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "Author: <https://github.com/${{ github.event.sender.login }}|@${{ github.event.sender.login }}>"
+                    }
+                  ]
+                }
+              ]
+            }
