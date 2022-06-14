@@ -44,7 +44,7 @@ jobs:
           retention-days: 5
 
       - name: Slack Notification on Success
-        if: always() #${{ success() }}
+        if: success()
         id: slack_success
         uses: slackapi/slack-github-action@v1.16.0
         with:
