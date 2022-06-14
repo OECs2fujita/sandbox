@@ -16,7 +16,7 @@ jobs:
           channel-id: ${{ env.CHANNEL_ID }}
           payload: |
             {
-              "text": "Build  Deploy Success!!",
+              "text": "Build & Deploy Success!!",
               "attachments": [
                 {
                   "id": 1,
