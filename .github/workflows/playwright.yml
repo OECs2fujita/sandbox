@@ -10,7 +10,7 @@ on:
       - completed
   workflow_dispatch:
 jobs:
-  test:
+  e2e_test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
@@ -47,11 +47,13 @@ jobs:
         if: ${{ success() }}
         uses: slackapi/slack-github-action@v1.16.0
         with:
-          channel-id: $CHANNEL_ID
+          channel-id: C03HTB5869H
           payload: |
             {
               "text": "Build & Deploy Success!!",
             }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
       - name: Slack Notification on Failure
         if: ${{ failure() }}
