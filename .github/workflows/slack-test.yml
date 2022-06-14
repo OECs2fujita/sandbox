@@ -1,5 +1,5 @@
 name: Slack chat.postMessage
-on: push
+on: workflow_dispatch
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -56,11 +56,15 @@ jobs:
               "text": "Build & Deploy Failure...",
               "attachments": [
                 {
-                  "id": 1,
                   "color": "FF0000",
                   "author_name": "${{ github.actor }}",
                   "author_icon": "${{ github.event.sender.avatar_url }}",
                   "fields": [
+                    {
+                      "title": "Commit Message",
+                      "value": "${{ env.COMMIT_MESSAGE }}",
+                      "short": false
+                    },
                     {
                       "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
                       "title": "GitHub Actions URL",
