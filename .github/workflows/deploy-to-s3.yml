@@ -59,7 +59,7 @@ jobs:
                     },
                     {
                       "title": "Staging URL",
-                      "value": ${{ secrets.STAGING_URL }},
+                      "value": "<${{ secrets.STAGING_URL }}>",
                       "short": false
                     },
                     {
