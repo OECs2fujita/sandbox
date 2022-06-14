@@ -47,7 +47,7 @@ jobs:
         if: success()
         uses: slackapi/slack-github-action@v1.16.0
         with:
-          channel-id: ${{ CHANNEL_ID }}
+          channel-id: ${{ env.CHANNEL_ID }}
           payload: |
             {
               "text": "Build & Deploy Success!!",
@@ -77,7 +77,7 @@ jobs:
         if: failure()
         uses: slackapi/slack-github-action@v1.16.0
         with:
-          channel-id: ${{ CHANNEL_ID }}
+          channel-id: ${{ env.CHANNEL_ID }}
           payload: |
             {
               "text": "Build & Failure...",
