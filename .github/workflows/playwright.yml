@@ -57,22 +57,10 @@ jobs:
               "attachments": [
                 {
                   "color": "00FF00",
-                  "author_name": "${{ github.actor }}",
-                  "author_icon": "${{ github.event.sender.avatar_url }}",
                   "fields": [
-                    {
-                      "title": "Commit Message",
-                      "value": "${{ env.COMMIT_MESSAGE }}",
-                      "short": false
-                    },
                     {
                       "title": "GitHub Actions URL (with Artifacts)",
                       "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
-                      "short": false
-                    },
-                    { 
-                      "title": "Compare URL",
-                      "value": "${{ github.event.compare }}",
                       "short": false
                     }
                   ]
@@ -91,22 +79,10 @@ jobs:
               "attachments": [
                 {
                   "color": "FF0000",
-                  "author_name": "${{ github.actor }}",
-                  "author_icon": "${{ github.event.sender.avatar_url }}",
                   "fields": [
                     {
-                      "title": "Commit Message",
-                      "value": "${{ env.COMMIT_MESSAGE }}",
-                      "short": false
-                    },
-                    {
+                      "title": "GitHub Actions URL (with Artifacts)",
                       "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
-                      "title": "GitHub Actions URL",
-                      "short": false
-                    },
-                    {
-                      "value": "${{ github.event.compare }}",
-                      "title": "Compare URL",
                       "short": false
                     }
                   ]

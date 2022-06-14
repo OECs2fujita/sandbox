@@ -58,6 +58,11 @@ jobs:
                       "short": false
                     },
                     {
+                      "title": "Staging URL",
+                      "value": ${{ secrets.STAGING_URL }},
+                      "short": false
+                    },
+                    {
                       "title": "GitHub Actions URL",
                       "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
                       "short": false
@@ -92,13 +97,13 @@ jobs:
                       "short": false
                     },
                     {
-                      "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
                       "title": "GitHub Actions URL",
+                      "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
                       "short": false
                     },
                     {
-                      "value": "${{ github.event.compare }}",
                       "title": "Compare URL",
+                      "value": "${{ github.event.compare }}",
                       "short": false
                     }
                   ]
