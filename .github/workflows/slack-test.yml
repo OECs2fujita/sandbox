@@ -16,7 +16,7 @@ jobs:
           channel-id: ${{ env.CHANNEL_ID }}
           payload: |
             {
-              "text": "Build & Deploy Success!!",
+              "text": "Build  Deploy Success!!",
               "attachments": [
                 {
                   "id": 1,
@@ -37,27 +37,11 @@ jobs:
                     }
                   ]
                 }
-              ],
-              "blocks": [
-                {
-                  "type": "rich_text",
-                  "block_id": "oUIu",
-                  "elements": [
-                    {
-                      "type": "rich_text_section",
-                      "elements": [
-                        {
-                          "type": "text",
-                          "text": "Build & Deploy Success!!"
-                        }
-                      ]
-                    }
-                  ]
-                }
               ]
             }
 
       - name: Send GitHub Action trigger data to Slack workflow2
+        if: always()
         id: slack2
         uses: slackapi/slack-github-action@v1.19.0
         with:
