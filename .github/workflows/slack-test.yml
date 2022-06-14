@@ -29,15 +29,18 @@ jobs:
                   "fields": [
                     {
                       "title": "Commit Message",
-                      "value": "${{ env.COMMIT_MESSAGE }}"
+                      "value": "${{ env.COMMIT_MESSAGE }}",
+                      "short": false
                     },
                     {
                       "title": "GitHub Actions URL",
                       "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
+                      "short": false
                     },
                     { 
                       "title": "Compare URL",
                       "value": "${{ github.event.compare }}",
+                      "short": false
                     }
                   ]
                 }
