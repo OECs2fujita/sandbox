@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Set COMMIT_MESSAGE
-        run: echo ::set-env name=COMMIT_MESSAGE::$(echo "${{ github.event.head_commit.message }}" | tr '\n' ' ')
+        run: echo "COMMIT_MESSAGE=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
 
       - name: Slack Notification on Success
         if: success()
@@ -50,7 +50,7 @@ jobs:
           channel-id: ${{ env.CHANNEL_ID }}
           payload: |
             {
-              "text": "Build & Failure...",
+              "text": "Build & Deploy Failure...",
               "attachments": [
                 {
                   "id": 1,
