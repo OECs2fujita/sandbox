@@ -43,9 +43,12 @@ jobs:
             test-results/
           retention-days: 5
 
+      - name: Set COMMIT_MESSAGE
+        run: echo ::set-env name=COMMIT_MESSAGE::$(echo "${{ github.event.head_commit.message }}" | tr '\n' ' ')
+
       - name: Slack Notification on Success
         if: success()
-        uses: slackapi/slack-github-action@v1.16.0
+        uses: slackapi/slack-github-action@v1.19.0
         with:
           channel-id: ${{ env.CHANNEL_ID }}
           payload: |
@@ -59,14 +62,16 @@ jobs:
                   "author_icon": "${{ github.event.sender.avatar_url }}",
                   "fields": [
                     {
-                      "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
-                      "title": "GitHub Actions URL",
-                      "short": false
+                      "title": "Commit Message",
+                      "value": "${{ env.COMMIT_MESSAGE }}"
                     },
                     {
-                      "value": "${{ github.event.compare }}",
+                      "title": "GitHub Actions URL",
+                      "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
+                    },
+                    { 
                       "title": "Compare URL",
-                      "short": false
+                      "value": "${{ github.event.compare }}",
                     }
                   ]
                 }
@@ -75,7 +80,7 @@ jobs:
 
       - name: Slack Notification on Failure
         if: failure()
-        uses: slackapi/slack-github-action@v1.16.0
+        uses: slackapi/slack-github-action@v1.19.0
         with:
           channel-id: ${{ env.CHANNEL_ID }}
           payload: |
@@ -84,7 +89,7 @@ jobs:
               "attachments": [
                 {
                   "id": 1,
-                  "color": "00FF00",
+                  "color": "FF0000",
                   "author_name": "${{ github.actor }}",
                   "author_icon": "${{ github.event.sender.avatar_url }}",
                   "fields": [
