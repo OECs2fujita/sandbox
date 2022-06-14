@@ -16,27 +16,47 @@ jobs:
           # 以下のように #チャンネル名も動作はしますが
           # チャンネル名が変更されると動かなくなるので
           # 実運用では C1QAUTY0M のような ID を使ってください
-          channel-id: "#技術検証"
+          channel-id: "#技術調査"
           payload: |
             {
               "text": ":github: ビルド結果: ${{ job.status }}\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
-              "blocks": [
+              "attachments": [
                 {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": ":github: ビルド結果: ${{ job.status }}\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-                  }
-                },
-                {
-                  "type": "context",
-                  "elements": [
+                  "id": 1,
+                  "color": "00FF00",
+                  "fallback": "[no preview available]",
+                  "author_name": "OECs2fujita",
+                  "author_icon": "https://github.com/OECs2fujita.png",
+                  "fields": [
                     {
-                      "type": "mrkdwn",
-                      "text": "Author: <https://github.com/${{ github.event.sender.login }}|@${{ github.event.sender.login }}>"
+                      "value": "<https://github.com/OECs2fujita/sandbox/actions/runs/2487204728>",
+                      "title": "GitHub Actions URL",
+                      "short": false
+                    },
+                    {
+                      "value": "test",
+                      "title": "Compare URL",
+                      "short": false
                     }
                   ]
                 }
+              ],
+              "blocks": [
+                  {
+                      "type": "rich_text",
+                      "block_id": "oUIu",
+                      "elements": [
+                          {
+                              "type": "rich_text_section",
+                              "elements": [
+                                  {
+                                      "type": "text",
+                                      "text": "Build & Deploy Success!!"
+                                  }
+                              ]
+                          }
+                      ]
+                  }
               ]
             }
         env:
