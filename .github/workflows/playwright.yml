@@ -51,23 +51,6 @@ jobs:
           payload: |
             {
               "text": "Build & Deploy Success!!",
-              "attachments": [
-                {
-                  "color": "#00FF00",
-                  "author_name": "OECs2fujita",
-                  "author_icon": "https://github.com/OECs2fujita.png",
-                  "fields": [
-                    {
-                      "title": "GitHub Actions URL",
-                      "value": "https://github.com/OECs2fujita/sandbox/actions/runs/2487204728",
-                    },
-                    {
-                      "title": "Compare URL",
-                      "value": "test",
-                    }
-                  ]
-                }
-              ],
             }
 
       - name: Slack Notification on Failure
