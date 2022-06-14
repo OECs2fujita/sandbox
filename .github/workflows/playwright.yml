@@ -54,16 +54,16 @@ jobs:
               "attachments": [
                 {
                   "color": "#00FF00",
-                  "author_name": "${{ github.actor }}",
-                  "author_icon": "${{ github.event.sender.avatar_url }}",
+                  "author_name": "OECs2fujita",
+                  "author_icon": "https://github.com/OECs2fujita.png",
                   "fields": [
                     {
                       "title": "GitHub Actions URL",
-                      "value": "${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}"
+                      "value": "https://github.com/OECs2fujita/sandbox/actions/runs/2487204728",
                     },
                     {
                       "title": "Compare URL",
-                      "value": "${{ github.event.compare }}"
+                      "value": "test",
                     }
                   ]
                 }
@@ -80,17 +80,17 @@ jobs:
               "text": "Build & Deploy Failure...",
               "attachments": [
                 {
-                  "color": "#FF0000",
-                  "author_name": "${{ github.actor }}",
-                  "author_icon": "${{ github.event.sender.avatar_url }}",
+                  "color": "#00FF00",
+                  "author_name": "OECs2fujita",
+                  "author_icon": "https://github.com/OECs2fujita.png",
                   "fields": [
                     {
                       "title": "GitHub Actions URL",
-                      "value": "${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}"
+                      "value": "https://github.com/OECs2fujita/sandbox/actions/runs/2487204728",
                     },
                     {
                       "title": "Compare URL",
-                      "value": "${{ github.event.compare }}"
+                      "value": "test",
                     }
                   ]
                 }
