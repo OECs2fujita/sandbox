@@ -19,7 +19,7 @@ function App() {
             count up
           </button>
         </p>
-        <p>CI/CD検証!!</p>
+        <p>CI/CD検証!!!</p>
         <p>
           <a
             className="App-link"
