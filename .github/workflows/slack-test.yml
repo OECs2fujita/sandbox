@@ -20,30 +20,24 @@ jobs:
               "text": "Process Success!!",
               "attachments": [
                 {
-                  "color": "00FF00",
+                  "color": "good",
                   "author_name": "${{ github.actor }}",
-                  "author_icon": "<${{ github.event.sender.avatar_url }}>",
-                  "blocks": [
+                  "author_icon": "${{ github.event.sender.avatar_url }}",
+                  "fields": [
                     {
-                      "type": "section",
-                      "text": {
-                        "type": "mrkdwn",
-                        "text": "*Commit Message* \n ${{ env.COMMIT_MESSAGE }}"
-                      }
+                      "title": "Commit Message",
+                      "value": "${{ env.COMMIT_MESSAGE }}",
+                      "short": false
                     },
                     {
-                      "type": "section",
-                      "text": {
-                        "type": "mrkdwn",
-                        "text": "*GitHub Actions URL* \n <${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>"
-                      }
+                      "title": "GitHub Actions URL",
+                      "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
+                      "short": false
                     },
-                    {
-                      "type": "section",
-                      "text": {
-                        "type": "mrkdwn",
-                        "text": "*Compare URL* \n <${{ github.event.compare }}>"
-                      }
+                    { 
+                      "title": "Compare URL",
+                      "value": "${{ github.event.compare }}",
+                      "short": false
                     }
                   ]
                 }
@@ -59,30 +53,24 @@ jobs:
               "text": "Process Failure...",
               "attachments": [
                 {
-                  "color": "FF0000",
+                  "color": "danger",
                   "author_name": "${{ github.actor }}",
-                  "author_icon": "<${{ github.event.sender.avatar_url }}>",
-                  "blocks": [
+                  "author_icon": "${{ github.event.sender.avatar_url }}",
+                  "fields": [
                     {
-                      "type": "section",
-                      "text": {
-                        "type": "mrkdwn",
-                        "text": "*Commit Message* \n ${{ env.COMMIT_MESSAGE }}"
-                      }
+                      "title": "Commit Message",
+                      "value": "${{ env.COMMIT_MESSAGE }}",
+                      "short": false
                     },
                     {
-                      "type": "section",
-                      "text": {
-                        "type": "mrkdwn",
-                        "text": "*GitHub Actions URL* \n <${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>"
-                      }
+                      "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
+                      "title": "GitHub Actions URL",
+                      "short": false
                     },
                     {
-                      "type": "section",
-                      "text": {
-                        "type": "mrkdwn",
-                        "text": "*Compare URL* \n <${{ github.event.compare }}>"
-                      }
+                      "value": "${{ github.event.compare }}",
+                      "title": "Compare URL",
+                      "short": false
                     }
                   ]
                 }
