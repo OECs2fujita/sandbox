@@ -5,10 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      CHANNEL_ID: C03HTB5869H # 通知を送りたいチャンネルのIDを指定する
+      CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
     steps:
       - uses: actions/checkout@v2
-
       - name: Set COMMIT_MESSAGE
         run: echo "COMMIT_MESSAGE=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
 
@@ -19,27 +18,33 @@ jobs:
           channel-id: ${{ env.CHANNEL_ID }}
           payload: |
             {
-              "text": "Build & Deploy Success!!",
+              "text": "Process Success!!",
               "attachments": [
                 {
                   "color": "00FF00",
                   "author_name": "${{ github.actor }}",
                   "author_icon": "${{ github.event.sender.avatar_url }}",
-                  "fields": [
+                  "blocks": [
                     {
-                      "title": "Commit Message",
-                      "value": "${{ env.COMMIT_MESSAGE }}",
-                      "short": false
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "*Commit Message* \n ${{ env.COMMIT_MESSAGE }}"
+                      }
                     },
                     {
-                      "title": "GitHub Actions URL",
-                      "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
-                      "short": false
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "*GitHub Actions URL* \n <${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>"
+                      }
                     },
-                    { 
-                      "title": "Compare URL",
-                      "value": "${{ github.event.compare }}",
-                      "short": false
+                    {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "*Compare URL* \n <${{ github.event.compare }}>"
+                      }
                     }
                   ]
                 }
@@ -53,27 +58,33 @@ jobs:
           channel-id: ${{ env.CHANNEL_ID }}
           payload: |
             {
-              "text": "Build & Deploy Failure...",
+              "text": "Process Failure...",
               "attachments": [
                 {
                   "color": "FF0000",
                   "author_name": "${{ github.actor }}",
                   "author_icon": "${{ github.event.sender.avatar_url }}",
-                  "fields": [
+                  "blocks": [
                     {
-                      "title": "Commit Message",
-                      "value": "${{ env.COMMIT_MESSAGE }}",
-                      "short": false
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "*Commit Message* \n ${{ env.COMMIT_MESSAGE }}"
+                      }
                     },
                     {
-                      "value": "<${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>",
-                      "title": "GitHub Actions URL",
-                      "short": false
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "*GitHub Actions URL* \n <${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}>"
+                      }
                     },
                     {
-                      "value": "${{ github.event.compare }}",
-                      "title": "Compare URL",
-                      "short": false
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "*Compare URL* \n <${{ github.event.compare }}>"
+                      }
                     }
                   ]
                 }
