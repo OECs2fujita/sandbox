@@ -22,7 +22,7 @@ jobs:
                 {
                   "color": "00FF00",
                   "author_name": "${{ github.actor }}",
-                  "author_icon": "${{ github.event.sender.avatar_url }}",
+                  "author_icon": "<${{ github.event.sender.avatar_url }}>",
                   "blocks": [
                     {
                       "type": "section",
@@ -61,7 +61,7 @@ jobs:
                 {
                   "color": "FF0000",
                   "author_name": "${{ github.actor }}",
-                  "author_icon": "${{ github.event.sender.avatar_url }}",
+                  "author_icon": "<${{ github.event.sender.avatar_url }}>",
                   "blocks": [
                     {
                       "type": "section",
