@@ -4,8 +4,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+      SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}
     steps:
       - uses: actions/checkout@v2
       - name: Set COMMIT_MESSAGE
@@ -15,7 +15,6 @@ jobs:
         if: success()
         uses: slackapi/slack-github-action@v1.19.0
         with:
-          channel-id: ${{ env.CHANNEL_ID }}
           payload: |
             {
               "text": "Process Success!!",
@@ -55,7 +54,6 @@ jobs:
         if: failure()
         uses: slackapi/slack-github-action@v1.19.0
         with:
-          channel-id: ${{ env.CHANNEL_ID }}
           payload: |
             {
               "text": "Process Failure...",
